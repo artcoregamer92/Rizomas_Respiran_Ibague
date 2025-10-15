@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rizomas que Respiran — Hydra</title>
+  <!-- Usa hydra local si está en /libs; si no, recurre a CDN -->
+  <script src="libs/hydra-synth.min.js"></script>
+  <script>
+    if (typeof window.Hydra === "undefined") {
+      document.write('<script src="https://unpkg.com/hydra-synth/dist/hydra-synth.js"><\/script>');
+    }
+  </script>
+  <style>html,body{margin:0;background:#000;overflow:hidden;}</style>
+</head>
+<body>
+<script>
+  // Inicializa Hydra a pantalla completa del canvas
+  const hydra = new Hydra({ detectAudio: true, canvas: undefined })
+  a.setBins(4); a.setScale(2); a.show()
+  // Patch base — respiración por graves/medios
+  osc(12,0.03,0.2)
+    .modulate(noise(2).scale(1.2), 0.35)
+    .colorama(0.12)
+    .saturate(1.2)
+    .modulate(osc(3,0.01).rotate(0.2), ()=>a.fft[0]*0.8)
+    .brightness(()=>a.fft[1]*0.4)
+    .contrast(1.05)
+    .out()
+
+  // Atajos simples vía teclado
+  window.addEventListener('keydown', (e)=>{
+  if (e.key === '1') speed = 0.8*speed
+  if (e.key === '2') speed = 1.1*speed
+  if (e.key.toLowerCase() === 'r') speed = 1.0 // NUEVO: reset
+  if (e.key.toLowerCase() === 'f') document.documentElement.requestFullscreen().catch(()=>{})
+})
+
+</script>
+</body>
+</html>
